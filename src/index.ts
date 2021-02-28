@@ -1,13 +1,11 @@
-import { interval, of, queueScheduler, defer, timer, SchedulerLike } from 'rxjs';
-import { delay, switchMap, tap, flatMap, map, repeat, delayWhen, concatMap, take } from 'rxjs/operators';
+import { range } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
-// v^v delay
-export const createSpecialInterval = (number: number, scheduler ?: SchedulerLike ) => {
-  return interval(0, scheduler).pipe(concatMap(v => of(v).pipe(delay(v * 1000, scheduler))), take(number));
-}
+const o = range(0, 100).pipe(filter(number => number > 50));
 
-createSpecialInterval(100).subscribe(v => { 
-  console.log(v); 
-  console.timeEnd('interval'); 
-  console.time('interval');
-});
+
+o.subscribe({
+  next: (value: any) => console.log('Next:', value),
+  complete: () => console.log('Complete!'),
+  error: (error) => console.log('Error!', error)
+})
