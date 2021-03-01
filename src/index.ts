@@ -1,8 +1,6 @@
-import { range } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { of, from } from 'rxjs';
 
-const o = range(0, 100).pipe(filter(number => number > 50));
-
+const o = of(5) // Promise.resolve(5)
 
 o.subscribe({
   next: (value: any) => console.log('Next:', value),
