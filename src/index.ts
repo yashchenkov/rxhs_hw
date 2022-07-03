@@ -1,9 +1,9 @@
-import { of, from } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 
-const o = of(5) // Promise.resolve(5)
+const data$ = ajax.getJSON('https://api.github.com/search/repositories?q=rxjs');
 
-o.subscribe({
-  next: (value: any) => console.log('Next:', value),
-  complete: () => console.log('Complete!'),
-  error: (error) => console.log('Error!', error)
-})
+data$.subscribe((value) => console.log('data$ value', value));
+
+const dataGitLab$ = ajax.getJSON('https://gitlab.com/api/v4/projects?search=nodejs');
+
+dataGitLab$.subscribe((value) => console.log('dataGitLab$ value', value));
